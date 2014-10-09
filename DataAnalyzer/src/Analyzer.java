@@ -6,7 +6,7 @@ public class Analyzer
 	static int totalQ = 0; 
 	static int totalG = 0; 
 	static double percentOfG;
-	static int numberOfSixes, numberOfSevens, numberOfOnes;
+	static int numberOfSixes, numberOfSevens, numberOfOnes, numberOfLinesWithMoreSevens;
 	
 	public static void main(String[] args)
 		{
@@ -62,21 +62,29 @@ public class Analyzer
 		}
 	
 	public static void findSevensAndOnes()
-		{		
-		for(int i = 0; i < Data.data.size(); i++)
+		{	
+		for(Record t : Data.data)
 			{
-			if(Data.data.getNumberCode(i).toString().substring(i,i + 1).equals(7))
-				{
-				numberOfSevens++;
-				}			
-			else if(Data.data.getNumberCode(i).toString().substring(i,i + 1).equals(1))
-				{
-				numberOfOnes++;
+			String aString = Integer.toString(t.getNumberCode());
+			for(int i = 0; i < 9; i++)
+				{				
+				if(aString.substring(i,i + 1).equals("7"))
+					{
+					numberOfSevens++;
+					}			
+				else if(aString.substring(i,i + 1).equals("1"))
+					{
+					numberOfOnes++;
+					}								
 				}
-			
+			if(numberOfSevens > numberOfOnes)
+				{
+				numberOfLinesWithMoreSevens++;
+				}
+			numberOfSevens = 0;
+			numberOfOnes = 0;
 			}
-		System.out.println("There are " + numberOfSixes + " lettercodes of length 6.");
-			
+		System.out.println("There are " + numberOfLinesWithMoreSevens + " lines that have more sevens than ones.");			
 		}
-
 	}
+
